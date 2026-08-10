@@ -20,6 +20,7 @@ import MaintenancePage from "./components/MaintenancePage";
 import { NotFoundPage } from "./components/NotFoundPage";
 import { createClient } from "./lib/supabase/client";
 // Pages are mostly lazy-loaded below
+import ThemeToggle from "./components/ThemeToggle";
 import { ThemeToggle } from "./components/ThemeToggle";
 import { Loader2 } from "lucide-react";
 
@@ -99,6 +100,7 @@ const EventDashboard = lazy(() => import("./routes/events.$eventId.dashboard"));
 const Leaderboard = lazy(() =>
   import("./components/Leaderboard").then((m) => ({ default: m.Leaderboard })),
 );
+const MemoryLane = lazy(() => import("./routes/memory-lane"));
 const AdminDashboard = lazy(() => import("./routes/admin.dashboard"));
 
 const LazyEventsIndex = lazy(() => import("./routes/events"));
@@ -172,6 +174,7 @@ const router = createBrowserRouter(
         <Route path="/events/map" element={<EventsMapPage />} />
         <Route path="/challenge" element={<ChallengeArena />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/memory-lane" element={<MemoryLane />} />
 
         <Route path="/feed" element={<Feed />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
