@@ -239,7 +239,30 @@ export default function App() {
       }
     };
 
+    const checkSilentMode = async () => {
+      try {
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          const { data } = await supabase
+            .from("user_preferences")
+            .select("silent_mode")
+            .eq("user_id", session.user.id)
+            .single();
+          
+          if (data?.silent_mode) {
+            document.documentElement.setAttribute("data-silent-mode", "true");
+          } else {
+            document.documentElement.removeAttribute("data-silent-mode");
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch silent mode preference:", err);
+      }
+    };
+
     verify();
+    checkSilentMode();
 
     return () => clearTimeout(timer);
   }, []);
